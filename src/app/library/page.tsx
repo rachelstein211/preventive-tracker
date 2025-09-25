@@ -25,7 +25,7 @@ export default function Library() {
     if (!form.name) return;
     const nextDue = computeNextDue(form.lastDone, form.frequencyDays);
 
-    // Note: no "as any" here
+    // Do NOT pass createdAt/updatedAt here; the store adds them.
     addItem({
       name: form.name,
       category: form.category,
@@ -34,8 +34,6 @@ export default function Library() {
       nextDue,
       notes: form.notes || undefined,
       guidelineUrl: form.guidelineUrl || undefined,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
     });
 
     setForm({
