@@ -6,15 +6,15 @@ import type { PreventiveItem, LogEntry } from '@/types/preventive';
 type State = {
   items: PreventiveItem[];
   logs: LogEntry[];
-  addItem: (i: Omit<PreventiveItem, 'id'|'createdAt'|'updatedAt'>) => void;
+  addItem: (i: Omit<PreventiveItem, 'id' | 'createdAt' | 'updatedAt'>) => void;
   updateItem: (id: string, patch: Partial<PreventiveItem>) => void;
   deleteItem: (id: string) => void;
-  logEvent: (l: Omit<LogEntry, 'id'|'createdAt'>) => void;
+  logEvent: (l: Omit<LogEntry, 'id' | 'createdAt'>) => void;
 };
 
 export const useTracker = create<State>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       items: [],
       logs: [],
       addItem: (i) =>
@@ -32,9 +32,7 @@ export const useTracker = create<State>()(
       updateItem: (id, patch) =>
         set((s) => ({
           items: s.items.map((it) =>
-            it.id === id
-              ? { ...it, ...patch, updatedAt: new Date().toISOString() }
-              : it
+            it.id === id ? { ...it, ...patch, updatedAt: new Date().toISOString() } : it
           ),
         })),
       deleteItem: (id) =>
