@@ -3,18 +3,16 @@ import { createEvent } from 'ics';
 import type { EventAttributes, DateArray } from 'ics';
 import dayjs from 'dayjs';
 
-/**
- * Downloads an .ics calendar file for a given item title and due date (ISO string).
- */
+/** Downloads an .ics calendar file for a given title and due date (ISO). */
 export function downloadIcs(title: string, dueISO: string) {
   const safeTitle = (title ?? '').trim() || 'Preventive item';
   const start = dayjs(dueISO).isValid() ? dayjs(dueISO) : dayjs();
 
   const startArr: DateArray = [
     start.year(),
-    start.month() + 1, // 1-based month for ICS
+    start.month() + 1, // 1-based months
     start.date(),
-    9, // 9:00 AM local time
+    9, // 9:00 AM
     0,
   ];
 
@@ -24,7 +22,6 @@ export function downloadIcs(title: string, dueISO: string) {
     duration: { hours: 1 },
   };
 
-  // ⬇️ Explicitly type callback params so there is no implicit 'any'
   createEvent(event, (error: Error | undefined, value: string | undefined) => {
     if (error || !value) {
       console.error('ICS creation error:', error);

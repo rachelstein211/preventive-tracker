@@ -8,14 +8,12 @@ import { useTracker } from '@/store/useTracker';
 export default function LogPage() {
   const { items, logs } = useTracker();
 
-  // map itemId -> name for display
   const nameById = useMemo(() => {
     const m = new Map<string, string>();
     items.forEach((i) => m.set(i.id, i.name));
     return m;
   }, [items]);
 
-  // newest first
   const sorted = useMemo(
     () => [...logs].sort((a, b) => b.performedOn.localeCompare(a.performedOn)),
     [logs]

@@ -25,7 +25,7 @@ export default function Library() {
     if (!form.name) return;
     const nextDue = computeNextDue(form.lastDone, form.frequencyDays);
 
-    // Do NOT pass createdAt/updatedAt here; the store adds them.
+    // Store handles id/createdAt/updatedAt
     addItem({
       name: form.name,
       category: form.category,
